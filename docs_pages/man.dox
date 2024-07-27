@@ -1,0 +1,92 @@
+/**
+@mainpage README
+
+# Authors
+
+Jonathan Jedwab. Simon Fraser University. Email: jed@sfu.ca. Homepage: <http://www.sfu.ca/~jed/>.
+
+Thomas Pender. Simon Fraser University. Email: tsp7@sfu.ca.
+
+# Description
+
+## Quaternary Legendre Pairs
+
+- Let \f$i=\sqrt{-1}\f$ and \f$j=-i\f$. A ***quaternary sequence***
+\f$a=(a_0,\,\dots,\,a_{N-1})\f$ of length \f$N\f$ has entries from the set
+\f$\{+1,\,i,\,-1,\,j\}\f$.
+
+- The ***periodic autocorrelations*** of a quaternary sequence \f$a=(a_k)\f$ of
+length \f$N\f$ are defined by
+\f[
+R_a(u) = \sum_{k=0}^{N-1}a_k\overline{a_{k+u}} \quad\quad\quad\quad u=1,\,2,\dots,\,N,
+\f]
+where the index \f$k+u\f$ is calculated modulo \f$N\f$.
+
+- A ***quaternary Legendre pair*** is a pair \f$\{a,\,b\}\f$ of length \f$N\f$
+sequences such that
+\f[
+R_a(u) + R_b(u) = -2 \quad\quad\quad\quad u \neq 0.
+\f]
+
+- For a quaternary Legendre pair \f$\{a,\,b\}\f$, it may always be assumed that
+\f$\sum a_k = 0\f$ and \f$\sum b_k = 1+i\f$.
+
+- A quaternary Legendre pair is ***restricted*** if we demand the periodic
+autocorrelations be real-valued. The pair is ***strongly restricted*** if
+we further demand one of the sequences has entries only in \f$\{+1,\,-1\}\f$.
+
+- Quaternary Legendre pairs were first introduced by Kotsireas and Winterhof
+(2024).
+
+## Code 
+
+- A quaternary sequence \f$a=(a_k)\f$ is represented by the corresponding
+\f$Z_4\f$ string \f$\tilde{a}=(\tilde{a}_k)\f$ where \f$\tilde{a}_k = \alpha\f$
+if \f$a_k = i^\alpha\f$.
+
+- Consideration was restricted to those quaternary sequences that have
+real-valued periodic autocorrelations. As such, the periodic autocorrelations
+are invariant under the natural action of the dihedral group \f$D_N\f$ of
+order \f$2N\f$, that is, it suffices to enumerate \f$Z_4\f$ bracelets. Moreover,
+since we are assuming the sum of sequence elements is fixed, the bracelets have
+fixed content. If we do not demand the correlations to be real-valued, then we
+may only consider the natural action of the cyclic group \f$C_N\f$ of order
+\f$N\f$ and so enuemrate fixed content necklaces.
+
+- Since we may assume \f$\sum a_k=0\f$, we consider the action of
+\f$D_n \times \{1,\,i,\,-1,\,j\}\f$ in this case. For the remaining sequence,
+we are assuming \f$\sum b_k = 1+i\f$ so that we can reduce the search only by
+the action of \f$D_N\f$ in this case.
+
+- To enumerate the fixed content bracelets, the fixed content bracelet procedure
+developed by Karim et al. (2013) was used. The reader may find their source code
+[here](https://www.socs.uoguelph.ca/~sawada/). The code found in the source file
+bracelets.c is essentially a straighforward augmentation of the code developed by
+Karim et al. where the functionalities to calculate and test for real-valued
+periodic autocorrelations, square norms of nonprincipal character sums, etc.,
+were added.
+
+- The fixed content necklace procedure of Sawada (2003) was also augmented by the
+same functionalities as those provided for the fixed content bracelet proceedure
+of Karim et al. (2013) in bracelets.c. The original source code of Sawada can be
+found [here](https://www.socs.uoguelph.ca/~sawada/).
+
+## Data
+
+The various results of the searches are stored in var/. Each length has its own
+subdirectory. The pairs are stored in addition to their autocorrelation vectors.
+
+# References
+
+Karim, S., J. Sawada, Z. Alamgir, and S. M. Husnine. "Generating Bracelets With
+Fixed Content." *Theoret. Comput. Sci.* 145 (2013): 103-112,
+[doi:10.1016/j.tcs.2012.11.024](https://doi.org/10.1016/j.tcs.2012.11.024).
+
+Kotsireas, I.S. and A. Winterhof. "Quaternary Legendre Pairs," in *New Advances in
+Designs, Codes and Cryptography*, eds. C. J. Colbourn and J. H. Dinitz, 289-304.
+Switzerland: Spring Nature, 2024.
+
+Sawada, J. "A Fast Algorithm to Generate Necklaces with Fixed Content." *Theoret.
+Comput. Sci.* 301, no. 1-3 (2003): 477-489,
+[doi:10.1016/S0304-3975(03)00049-5](https://doi.org/10.1016/S0304-3975(03)00049-5).
+*/
