@@ -9,7 +9,7 @@
 	-search for quaternary bracelets passing the PSD test, with real periodic
    autocorrelations, sum of elements 1+i.
 -src/ordered_check_sums.go
-	- search the outputs of src/A and src/B for quaternary Legendre pairs.
+	-search the outputs of src/A and src/B for quaternary Legendre pairs.
 
 ## Installation
 
