@@ -36,9 +36,9 @@
 ## Usage
 
 - src/A: 
-    ./src/A <length> 1> <A_out_file>
+    ./src/A \<length\> 1\> \<A_out_file\>
 - src/B: 
-    ./src/B <length> 1> <B_out_file>
+    ./src/B \<length\> 1\> \<B_out_file\>
 - src/ordered_check_sums: 
-    ./src/ordered_check_sums <A_out_file> <B_out_file> 1> <Legendre_pairs>
+    ./src/ordered_check_sums \<A_out_file\> \<B_out_file\> 1\> \<legendre_pairs\>
 
