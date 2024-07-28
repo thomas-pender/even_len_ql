@@ -4,7 +4,7 @@ AC_INIT([evenlen_ql], [0.0])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/A.c])
-AC_CONFIG_HEADERS([common/config.h])
+AC_CONFIG_HEADERS([src/config.h])
 
 AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror])
 
@@ -83,7 +83,9 @@ Compiler: '${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} ${LIBS}'
 Package features:
         - asynchronous execution: ${async_exec}
 
-Compile with 'make install'.
+Compile with 'make'.
+Compile Golang with 'make go GOC=[go]'.
+Generate detailed documentation with 'make doxygen-doc'.
 
 ==================================================
 

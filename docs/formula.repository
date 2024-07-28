@@ -1,0 +1,26 @@
+\_form#0=49x14:$i=\sqrt{-1}$
+\_form#1=38x11:$j=-i$
+\_form#2=105x14:$a=(a_0,\,\dots,\,a_{N-1})$
+\_form#3=11x10:$N$
+\_form#4=76x14:$\{+1,\,i,\,-1,\,j\}$
+\_form#5=45x14:$a=(a_k)$
+\_form#6=249x39:\[
+R_a(u) = \sum_{k=0}^{N-1}a_k\overline{a_{k+u}} \quad\quad\quad\quad u=1,\,2,\dots,\,N,
+\]
+\_form#7=29x11:$k+u$
+\_form#8=31x14:$\{a,\,b\}$
+\_form#9=194x14:\[
+R_a(u) + R_b(u) = -2 \quad\quad\quad\quad u \neq 0.
+\]
+\_form#10=50x14:$\sum a_k = 0$
+\_form#11=69x14:$\sum b_k = 1+i$
+\_form#12=51x14:$\{+1,\,-1\}$
+\_form#13=14x13:$Z_4$
+\_form#14=45x14:$\tilde{a}=(\tilde{a}_k)$
+\_form#15=38x11:$\tilde{a}_k = \alpha$
+\_form#16=40x11:$a_k = i^\alpha$
+\_form#17=19x13:$D_N$
+\_form#18=18x10:$2N$
+\_form#19=18x13:$C_N$
+\_form#20=50x14:$\sum a_k=0$
+\_form#21=99x14:$D_n \times \{1,\,i,\,-1,\,j\}$
