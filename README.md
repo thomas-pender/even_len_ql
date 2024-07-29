@@ -17,6 +17,7 @@
 - Run
 	1. <tt>./configure</tt>
 	2. <tt>make</tt>
+  NOTE: parallel builds are not provided for.
 - If you have a Go compiler, then <tt>src/ordered_check_sums</tt> will be built
   from <tt>src/ordered_check_sums.go</tt>. The Go compiler can be set using either
   <tt>./configuration</tt> or <tt>make</tt> by overriding the variable 
