@@ -11,14 +11,6 @@ AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror])
 #-------------------------------------------------
 # doxygen
 #-------------------------------------------------
-AC_CHECK_PROGS([DOXY_], [doxygen], [yes])
-if test -z "${DOXY_}"; then
-AC_MSG_WARN([
-========================================
-doxygen ***NOT*** found.
-Continuing without...
-========================================])
-fi
 DX_INIT_DOXYGEN([$PACKAGE_NAME],[Doxyfile],doc)
 DX_HTML_FEATURE(ON)
 DX_CHM_FEATURE(OFF)
@@ -84,19 +76,19 @@ AC_OUTPUT
 
 cat << EOF
 
-==================================================
+============================================================
 
 ${PACKAGE_NAME} Version ${PACKAGE_VERSION}
 
-Compiler: '${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} ${LIBS}'
+C compiler: '${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} ${LIBS}'
+Go compiler: '${GOC} build'
 
 Package features:
         - asynchronous execution: ${async_exec}
 
 Compile with 'make'.
-Compile Golang with 'make go [GOC=go]'.
 Generate detailed documentation with 'make doxygen-doc'.
 
-==================================================
+============================================================
 
 EOF

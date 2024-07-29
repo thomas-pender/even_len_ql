@@ -4,6 +4,8 @@ ACLOCAL_AMFLAGS = -I m4
 GOC=@GOC@
 GOEXT=@GOEXT@
 
+BUILT_SOURCES = src/ordered_check_sums
+
 noinst_LIBRARIES = src/liblegendre.a
 src_liblegendre_a_SOURCES = src/legendre.h src/bracelets.c \
 src/seq_funcs.c src/bracelets.h src/defs.h src/seq_funcs.h
@@ -19,7 +21,7 @@ src_B_SOURCES = src/B.c
 src_B_CPPFLAGS = -I$(top_srcdir)/src
 src_B_LDADD = src/liblegendre.a
 
-go: src/ordered_check_sums.$(GOEXT)
-	-$(GOC) build -o src/ordered_check_sums $<
+src/ordered_check_sums: src/ordered_check_sums.$(GOEXT)
+	-$(GOC) build -o $@ $<
 
 CLEANFILES = src/ordered_check_sums
