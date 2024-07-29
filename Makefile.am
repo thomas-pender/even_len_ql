@@ -1,7 +1,8 @@
 include $(top_srcdir)/aminclude.am
 ACLOCAL_AMFLAGS = -I m4
 
-GOC=go
+GOC=@GOC@
+GOEXT=@GOEXT@
 
 noinst_LIBRARIES = src/liblegendre.a
 src_liblegendre_a_SOURCES = src/legendre.h src/bracelets.c \
@@ -18,7 +19,7 @@ src_B_SOURCES = src/B.c
 src_B_CPPFLAGS = -I$(top_srcdir)/src
 src_B_LDADD = src/liblegendre.a
 
-go: src/ordered_check_sums.go
-	-$(GOC) build -o src/ordered_check_sums src/ordered_check_sums.go
+go: src/ordered_check_sums.$(GOEXT)
+	-$(GOC) build -o src/ordered_check_sums $<
 
 CLEANFILES = src/ordered_check_sums

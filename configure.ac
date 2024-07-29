@@ -68,6 +68,16 @@ Stopping...
 ========================================])])
 #-------------------------------------------------
 
+#-------------------------------------------------
+# extra variables
+#-------------------------------------------------
+GOC=go
+AC_SUBST([GOC])
+
+GOEXT=go
+AC_SUBST([GOEXT])
+#-------------------------------------------------
+
 AC_CONFIG_FILES([Makefile Doxyfile])
 
 AC_OUTPUT
@@ -84,7 +94,7 @@ Package features:
         - asynchronous execution: ${async_exec}
 
 Compile with 'make'.
-Compile Golang with 'make go GOC=[go]'.
+Compile Golang with 'make go [GOC=go]'.
 Generate detailed documentation with 'make doxygen-doc'.
 
 ==================================================
