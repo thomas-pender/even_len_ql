@@ -23,10 +23,10 @@
   <tt>GOC</tt>. If you do not have a Go compiler, you will need to provide your 
   own program to replace <tt>src/ordered_check_sums.go</tt>.
 - If you have the freely available doxygen installed, detailed html
-  documentation will be generated when you execute <tt>make</tt>. If you do not 
-  have doxygen installed, you can download it [here](https://www.doxygen.nl/). 
-  Otherwise, the detailed descriptions are found in the source code comments, and 
-  doxygen can be disabled at configuration by 
+  documentation will be generated at <tt>docs/index.html</tt> when you execute 
+  <tt>make</tt>. If you do not have doxygen installed, you can download it 
+  [here](https://www.doxygen.nl/). Otherwise, the detailed descriptions are found 
+  in the source code comments, and doxygen can be disabled at configuration by 
   <tt>./configure --disable-doxygen-doc</tt>.
 - By default, POSIX pthreads are used to employ asynchronous execution. To disable 
   this feature, run <tt>./configure --disable-async-exec</tt>. If the pthreads 
