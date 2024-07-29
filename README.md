@@ -16,7 +16,7 @@
 
 - Run
     1. <tt>mkdir build && cd build</tt>
-	1. <tt>../configure</tt>
+	1. <tt>../configure [options | --help for help]</tt>
 	2. <tt>make</tt><br>
 - If you have a Go compiler, then <tt>build/src/ordered_check_sums</tt> will be 
   built from <tt>src/ordered_check_sums.go</tt>. The Go compiler can be set using 
