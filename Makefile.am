@@ -30,6 +30,6 @@ all-local:
 	-$(MAKE) doxygen-doc
 
 clean-local:
-	-rm -rf docs
+	-rm -rf $(builddir)/docs
 
 CLEANFILES = $(builddir)/src/ordered_check_sums
