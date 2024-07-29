@@ -15,17 +15,17 @@
 ## Installation
 
 - Run
-	1. <tt>./configure</tt>
+    1. <tt>mkdir build && cd build</tt>
+	1. <tt>../configure</tt>
 	2. <tt>make</tt><br>
-  NOTE: parallel builds are not provided for.
 - If you have a Go compiler, then <tt>src/ordered_check_sums</tt> will be built
   from <tt>src/ordered_check_sums.go</tt>. The Go compiler can be set using either
   <tt>./configuration</tt> or <tt>make</tt> by overriding the variable 
   <tt>GOC</tt>. If you do not have a Go compiler, you will need to provide your 
   own program to replace <tt>src/ordered_check_sums.go</tt>.
 - If you have the freely available doxygen installed, detailed html
-  documentation will be generated at <tt>docs/index.html</tt> when you execute 
-  <tt>make</tt>. If you do not have doxygen installed, you can download it 
+  documentation will be generated at <tt>build/docs/index.html</tt> when you 
+  execute <tt>make</tt>. If you do not have doxygen installed, you can download it 
   [here](https://www.doxygen.nl/). Otherwise, the detailed descriptions are found 
   in the source code comments, and doxygen can be disabled at configuration by 
   <tt>./configure --disable-doxygen-doc</tt>.

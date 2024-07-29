@@ -4,7 +4,9 @@ ACLOCAL_AMFLAGS = -I m4
 GOC=@GOC@
 GOEXT=@GOEXT@
 
-BUILT_SOURCES = src/ordered_check_sums
+VPATH = $(srcdir):$(builddir)
+
+BUILT_SOURCES = $(builddir)/src/ordered_check_sums
 
 noinst_LIBRARIES = src/liblegendre.a
 src_liblegendre_a_SOURCES = src/legendre.h src/bracelets.c \
@@ -21,7 +23,7 @@ src_B_SOURCES = src/B.c
 src_B_CPPFLAGS = -I$(top_srcdir)/src
 src_B_LDADD = src/liblegendre.a
 
-src/ordered_check_sums: src/ordered_check_sums.$(GOEXT)
+$(builddir)/src/ordered_check_sums: src/ordered_check_sums.$(GOEXT)
 	-$(GOC) build -o $@ $<
 
 all-local:
@@ -30,4 +32,4 @@ all-local:
 clean-local:
 	-rm -rf docs
 
-CLEANFILES = src/ordered_check_sums
+CLEANFILES = $(builddir)/src/ordered_check_sums
