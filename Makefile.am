@@ -24,4 +24,10 @@ src_B_LDADD = src/liblegendre.a
 src/ordered_check_sums: src/ordered_check_sums.$(GOEXT)
 	-$(GOC) build -o $@ $<
 
+all-local:
+	-$(MAKE) doxygen-doc
+
+clean-local:
+	-rm -rf docs
+
 CLEANFILES = src/ordered_check_sums
