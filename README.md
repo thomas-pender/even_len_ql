@@ -27,7 +27,7 @@
   execute <tt>make</tt>. If you do not have doxygen installed, you can download it 
   [here](https://www.doxygen.nl/). Otherwise, the detailed descriptions are found 
   in the source code comments, and doxygen can be disabled at configuration by 
-  <tt>../configure --disable-doxygen-doc</tt>.
+  <tt>./configure --disable-doxygen-doc</tt>.
 - By default, POSIX pthreads are used to employ asynchronous execution. To disable 
   this feature, run <tt>./configure --disable-async-exec</tt>. If the pthreads 
   utilities cannot be accessed, then this feature will be automatically disabled.
