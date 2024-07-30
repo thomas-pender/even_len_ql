@@ -32,6 +32,6 @@ all-local:
 clean-local:
 	-rm -rf $(builddir)/docs
 
-EXTRA_DIST = $(srcdir)/src/ordered_check_sums.$(GOEXT)
+EXTRA_DIST = $(srcdir)/src/ordered_check_sums.$(GOEXT) $(srcdir)/docs_pages
 
 CLEANFILES = $(builddir)/src/ordered_check_sums
