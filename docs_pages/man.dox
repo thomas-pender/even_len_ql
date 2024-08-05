@@ -3,9 +3,9 @@
 
 # Authors
 
-Jonathan Jedwab. Simon Fraser University. Email: jed@sfu.ca. Homepage: <https://www.sfu.ca/~jed/>.
+Jonathan Jedwab. Simon Fraser University. Email: jed@sfu.ca. Homepage: <https://www.sfu.ca/~jed>.
 
-Thomas Pender. Simon Fraser University. Email: tsp7@sfu.ca. Homepage: <https://www.sfu.ca/~tsp7/>.
+Thomas Pender. Simon Fraser University. Email: tsp7@sfu.ca. Homepage: <https://www.sfu.ca/~tsp7>.
 
 # Description
 
@@ -29,7 +29,7 @@ R_a(u) + R_b(u) = -2 \quad\quad\quad\quad u \neq 0.
 \f]
 
 - For a quaternary Legendre pair \f$\{a,\,b\}\f$, it may always be assumed that
-\f$\sum a_k = 0\f$ and \f$\sum b_k = 1+i\f$.
+\f$\sum a_k = 1+i\f$ and \f$\sum b_k = 0\f$.
 
 - A quaternary Legendre pair is ***restricted*** if we demand the periodic
 autocorrelations be real-valued. The pair is ***strongly restricted*** if
@@ -53,9 +53,9 @@ fixed content. If we do not demand the correlations to be real-valued, then we
 may only consider the natural action of the cyclic group \f$C_N\f$ of order
 \f$N\f$ and so enuemrate fixed content necklaces.
 
-- Since we may assume \f$\sum a_k=0\f$, we consider the action of
+- Since we may assume \f$\sum b_k=0\f$, we consider the action of
 \f$D_n \times \{1,\,i,\,-1,\,j\}\f$ in this case. For the remaining sequence,
-we are assuming \f$\sum b_k = 1+i\f$ so that we can reduce the search only by
+we are assuming \f$\sum a_k = 1+i\f$ so that we can reduce the search only by
 the action of \f$D_N\f$ in this case.
 
 - To enumerate the fixed content bracelets, the fixed content bracelet procedure
