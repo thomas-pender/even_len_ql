@@ -22,7 +22,9 @@ DX_PDF_FEATURE(OFF)
 DX_PS_FEATURE(OFF)
 #-------------------------------------------------
 
+: ${CFLAGS="-O3"}
 AC_PROG_CC
+
 AC_PROG_RANLIB
 AM_PROG_AR
 # AC_PROG_INSTALL
