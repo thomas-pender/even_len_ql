@@ -156,10 +156,10 @@ am_src_liblegendre_a_OBJECTS = src/liblegendre_a-bracelets.$(OBJEXT) \
 src_liblegendre_a_OBJECTS = $(am_src_liblegendre_a_OBJECTS)
 am_src_A_OBJECTS = src/A-A.$(OBJEXT)
 src_A_OBJECTS = $(am_src_A_OBJECTS)
-src_A_DEPENDENCIES = src/liblegendre.a
+src_A_DEPENDENCIES = $(top_builddir)/src/liblegendre.a
 am_src_B_OBJECTS = src/B-B.$(OBJEXT)
 src_B_OBJECTS = $(am_src_B_OBJECTS)
-src_B_DEPENDENCIES = src/liblegendre.a
+src_B_DEPENDENCIES = $(top_builddir)/src/liblegendre.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -418,11 +418,11 @@ src/seq_funcs.c src/bracelets.h src/defs.h src/seq_funcs.h
 src_liblegendre_a_CPPFLAGS = -I$(top_srcdir)/src
 src_A_SOURCES = src/A.c
 src_A_CPPFLAGS = -I$(top_srcdir)/src
-src_A_LDADD = src/liblegendre.a
+src_A_LDADD = $(top_builddir)/src/liblegendre.a
 src_B_SOURCES = src/B.c
 src_B_CPPFLAGS = -I$(top_srcdir)/src
-src_B_LDADD = src/liblegendre.a
-EXTRA_DIST = $(srcdir)/src/ordered_check_sums.$(GOEXT) $(srcdir)/docs_pages $(srcdir)/var README.md
+src_B_LDADD = $(top_builddir)/src/liblegendre.a
+EXTRA_DIST = $(srcdir)/src/ordered_check_sums.$(GOEXT) $(srcdir)/docs_pages $(srcdir)/var $(srcdir)/README.md
 CLEANFILES = $(builddir)/src/ordered_check_sums
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -1035,7 +1035,7 @@ uninstall-am:
 #   and this notice are preserved.
 # 
 
-$(builddir)/src/ordered_check_sums: src/ordered_check_sums.$(GOEXT)
+$(top_builddir)/src/ordered_check_sums: $(top_srcdir)/src/ordered_check_sums.$(GOEXT)
 	-$(GOC) build -o $@ $<
 
 all-local:

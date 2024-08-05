@@ -17,13 +17,13 @@ noinst_PROGRAMS = src/A src/B
 
 src_A_SOURCES = src/A.c
 src_A_CPPFLAGS = -I$(top_srcdir)/src
-src_A_LDADD = src/liblegendre.a
+src_A_LDADD = $(top_builddir)/src/liblegendre.a
 
 src_B_SOURCES = src/B.c
 src_B_CPPFLAGS = -I$(top_srcdir)/src
-src_B_LDADD = src/liblegendre.a
+src_B_LDADD = $(top_builddir)/src/liblegendre.a
 
-$(builddir)/src/ordered_check_sums: src/ordered_check_sums.$(GOEXT)
+$(top_builddir)/src/ordered_check_sums: $(top_srcdir)/src/ordered_check_sums.$(GOEXT)
 	-$(GOC) build -o $@ $<
 
 all-local:
@@ -32,6 +32,6 @@ all-local:
 clean-local:
 	-rm -rf $(builddir)/docs
 
-EXTRA_DIST = $(srcdir)/src/ordered_check_sums.$(GOEXT) $(srcdir)/docs_pages $(srcdir)/var README.md
+EXTRA_DIST = $(srcdir)/src/ordered_check_sums.$(GOEXT) $(srcdir)/docs_pages $(srcdir)/var $(srcdir)/README.md
 
 CLEANFILES = $(builddir)/src/ordered_check_sums
