@@ -29,7 +29,6 @@ Features:
 - <p><tt>--disable-go</tt>: By default, <tt>configure</tt> searches for a Golang
   compiler to compile the source <tt>src/ordered_check_sums.go</tt>. This can be
   disabled at configuration via <tt>../configure --disable-go</tt>
-
   The user will then be required to provide their own substitue for
   <tt>src/ordered_check_sums.go</tt></p>
   <p>To manually choose a compiler, run
