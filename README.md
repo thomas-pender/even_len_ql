@@ -28,30 +28,20 @@ Features:
 
 - <p><tt>--disable-go</tt>: By default, <tt>configure</tt> searches for a Golang
   compiler to compile the source <tt>src/ordered_check_sums.go</tt>. This can be
-  disabled at configuration via
-
-  <code>
-  ../configure --disable-go
-  </code>
+  disabled at configuration via <tt>../configure --disable-go</tt>
 
   The user will then be required to provide their own substitue for
   <tt>src/ordered_check_sums.go</tt></p>
   <p>To manually choose a compiler, run
-  <code>
-  ../configure GOC=<compiler> GOFLAGS=<compiler flags>
-  </code>
-  from inside the <tt>build</tt> directory.</p>
+  <tt>../configure GOC=<compiler> GOFLAGS=<compiler flags></tt> from inside the
+  <tt>build</tt> directory.</p>
 
 - <p><tt>--disable-doxygen-doc</tt>: By default, running <tt>make</tt>
   will run <tt>doxygen</tt> to generate detailed documentation of the source code.
   If you do not have <tt>doxygen</tt> installed, then this step will simply fail
   and <tt>make</tt> will happily continue. Alternatively, at configuration, the
-  user may run
-  <code>
-  ../configure --disable-doxygen-doc
-  </code>
-  in order to disable this feature.
-  </p>
+  user may run <tt>../configure --disable-doxygen-doc</tt> in order to disable
+  this feature.</p>
 
   <p>If you have the freely available doxygen installed, detailed html
   documentation will be generated at <tt>build/docs/index.html</tt> when you
@@ -61,18 +51,11 @@ Features:
 
 - <tt>--disable-async-exec</tt>: By default, POSIX pthreads are used to employ
   asynchronous execution. To disable this feature, run
-  <code>
-  ../configure --disable-async-exec
-  </code>
-  If the pthreads utilities cannot be accessed, then this feature will be
-  automatically disabled.
+  <tt>../configure --disable-async-exec</tt> If the pthreads utilities cannot be
+  accessed, then this feature will be automatically disabled.
 
 - <p>For a detailed description of all the options available to the user, simply
-  run
-  <code>
-  ../configure --help
-  </code>
-  to display them.</p>
+  run <tt>../configure --help</tt> to display them.</p>
 
 ## Usage
 
