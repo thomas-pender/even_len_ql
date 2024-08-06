@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>README.html</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+</head>
+
+<body>
+
+<h1 id="project-search-for-even-length-quaternary-legendre-pairs">Project: Search for Even Length Quaternary Legendre Pairs</h1>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><tt>src/A.c</tt>:
+<ul>
+<li>search for quaternary bracelets passing the PSD test, with real periodic autocorrelations, sum of elements 0.</li>
+</ul></li>
+<li><tt>src/B.c</tt>:
+<ul>
+<li>search for quaternary bracelets passing the PSD test, with real periodic autocorrelations, sum of elements 1+i.</li>
+</ul></li>
+<li><tt>src/ordered_check_sums.go</tt>:
+<ul>
+<li>search the outputs of <tt>src/A</tt> and <tt>src/B</tt> for quaternary Legendre pairs.</li>
+</ul></li>
+</ul>
+<h2 id="compilation">Compilation</h2>
+<ul>
+<li>From the root of the package, run
+<ol type="1">
+<li><tt>mkdir build &amp;&amp; cd build</tt></li>
+<li><tt>../configure [options | –help for help]</tt></li>
+<li><tt>make</tt><br></li>
+</ol>
+By default, <tt>configure</tt> searches for <tt>gccgo</tt>. To override this default, see sec. Configure Options below.</li>
+</ul>
+<h2 id="configure-options">Configure Options</h2>
+<p>Features:</p>
+<ul>
+<li><p>
+<p><tt>–disable-go</tt>: By default, <tt>configure</tt> searches for a Golang compiler to compile the source <tt>src/ordered_check_sums.go</tt>. This can be disabled at configuration via <tt>../configure –disable-go</tt> The user will then be required to provide their own substitue for <tt>src/ordered_check_sums.go</tt></p>
+</p>
+<p>
+<p>To manually choose a compiler, run <tt>../configure GOC=<compiler> GOFLAGS=<compiler flags></tt> from inside the <tt>build</tt> directory.</p>
+</p></li>
+<li><p>
+<p><tt>–disable-doxygen-doc</tt>: By default, running <tt>make</tt> will run <tt>doxygen</tt> to generate detailed documentation of the source code. If you do not have <tt>doxygen</tt> installed, then this step will simply fail and <tt>make</tt> will happily continue. Alternatively, at configuration, the user may run <tt>../configure –disable-doxygen-doc</tt> in order to disable this feature.</p>
+</p>
+<p>
+<p>If you have the freely available doxygen installed, detailed html documentation will be generated at <tt>build/docs/index.html</tt> when you execute <tt>make</tt>. If you do not have doxygen installed, you can download it <a href="https://www.doxygen.nl/">here</a>. Otherwise, the detailed descriptions are found in the source code comments.</p>
+</p></li>
+<li><p><tt>–disable-async-exec</tt>: By default, POSIX pthreads are used to employ asynchronous execution. To disable this feature, run <tt>../configure –disable-async-exec</tt> If the pthreads utilities cannot be accessed, then this feature will be automatically disabled.</p></li>
+<li><p>
+<p>For a detailed description of all the options available to the user, simply run <tt>../configure –help</tt> to display them.</p>
+</p></li>
+</ul>
+<h2 id="usage">Usage</h2>
+<ul>
+<li><tt>src/A</tt>: <tt>./src/A &lt;length&gt; 1&gt; &lt;A_out_file&gt;</tt></li>
+<li><tt>src/B</tt>: <tt>./src/B &lt;length&gt; 1&gt; &lt;B_out_file&gt;</tt></li>
+<li><tt>src/ordered_check_sums</tt>: <tt>./src/ordered_check_sums &lt;A_out_file&gt; &lt;B_out_file&gt; 1&gt; &lt;legendre_pairs&gt;</tt></li>
+</ul>
+
+</body>
+</html>

@@ -126,7 +126,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-noinst_PROGRAMS = src/A$(EXEEXT) src/B$(EXEEXT)
+@GO__FALSE@noinst_PROGRAMS = src/A$(EXEEXT) src/B$(EXEEXT)
+@GO__TRUE@noinst_PROGRAMS = src/A$(EXEEXT) src/B$(EXEEXT) \
+@GO__TRUE@	src/ordered_check_sums$(EXEEXT)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_prog_doxygen.m4 \
@@ -160,6 +162,11 @@ src_A_DEPENDENCIES = $(top_builddir)/src/liblegendre.a
 am_src_B_OBJECTS = src/B-B.$(OBJEXT)
 src_B_OBJECTS = $(am_src_B_OBJECTS)
 src_B_DEPENDENCIES = $(top_builddir)/src/liblegendre.a
+am__src_ordered_check_sums_SOURCES_DIST =  \
+	src/ordered_check_sums.$(GOEXT)
+am_src_ordered_check_sums_OBJECTS =
+src_ordered_check_sums_OBJECTS = $(am_src_ordered_check_sums_OBJECTS)
+src_ordered_check_sums_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -196,9 +203,9 @@ am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(src_liblegendre_a_SOURCES) $(src_A_SOURCES) \
-	$(src_B_SOURCES)
+	$(src_B_SOURCES) $(src_ordered_check_sums_SOURCES)
 DIST_SOURCES = $(src_liblegendre_a_SOURCES) $(src_A_SOURCES) \
-	$(src_B_SOURCES)
+	$(src_B_SOURCES) $(am__src_ordered_check_sums_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -303,6 +310,7 @@ ETAGS = @ETAGS@
 EXEEXT = @EXEEXT@
 GOC = @GOC@
 GOEXT = @GOEXT@
+GOFLAGS = @GOFLAGS@
 GREP = @GREP@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -410,22 +418,20 @@ top_srcdir = @top_srcdir@
 @DX_COND_doc_TRUE@	$(DX_CLEAN_LATEX)
 
 ACLOCAL_AMFLAGS = -I m4
-BUILT_SOURCES = $(builddir)/src/ordered_check_sums
 noinst_LIBRARIES = src/liblegendre.a
 src_liblegendre_a_SOURCES = src/legendre.h src/bracelets.c \
 src/seq_funcs.c src/bracelets.h src/defs.h src/seq_funcs.h
 
 src_liblegendre_a_CPPFLAGS = -I$(top_srcdir)/src
+@GO__FALSE@src_ordered_check_sums_SOURCES = src/ordered_check_sums.$(GOEXT)
 src_A_SOURCES = src/A.c
 src_A_CPPFLAGS = -I$(top_srcdir)/src
 src_A_LDADD = $(top_builddir)/src/liblegendre.a
 src_B_SOURCES = src/B.c
 src_B_CPPFLAGS = -I$(top_srcdir)/src
 src_B_LDADD = $(top_builddir)/src/liblegendre.a
-EXTRA_DIST = $(srcdir)/src/ordered_check_sums.$(GOEXT) $(srcdir)/docs_pages $(srcdir)/var $(srcdir)/README.md
-CLEANFILES = $(builddir)/src/ordered_check_sums
-all: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) all-am
+EXTRA_DIST = $(srcdir)/docs_pages $(srcdir)/var $(srcdir)/README.md
+all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .c .o .obj
@@ -511,6 +517,10 @@ src/B-B.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/B$(EXEEXT): $(src_B_OBJECTS) $(src_B_DEPENDENCIES) $(EXTRA_src_B_DEPENDENCIES) src/$(am__dirstamp)
 	@rm -f src/B$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(src_B_OBJECTS) $(src_B_LDADD) $(LIBS)
+
+src/ordered_check_sums$(EXEEXT): $(src_ordered_check_sums_OBJECTS) $(src_ordered_check_sums_DEPENDENCIES) $(EXTRA_src_ordered_check_sums_DEPENDENCIES) src/$(am__dirstamp)
+	@rm -f src/ordered_check_sums$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(src_ordered_check_sums_OBJECTS) $(src_ordered_check_sums_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -833,14 +843,11 @@ distcleancheck: distclean
 	       $(distcleancheck_listfiles) ; \
 	       exit 1; } >&2
 check-am: all-am
-check: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) check-am
+check: check-am
 all-am: Makefile $(PROGRAMS) $(LIBRARIES) all-local
 installdirs:
-install: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) install-am
-install-exec: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) install-exec-am
+install: install-am
+install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
 
@@ -861,7 +868,6 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -872,7 +878,6 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-am
 
 clean-am: clean-generic clean-local clean-noinstLIBRARIES \
@@ -952,7 +957,7 @@ ps-am:
 
 uninstall-am:
 
-.MAKE: all check install install-am install-exec install-strip
+.MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am all-local am--depfiles am--refresh \
 	check check-am clean clean-cscope clean-generic clean-local \
@@ -1035,8 +1040,8 @@ uninstall-am:
 #   and this notice are preserved.
 # 
 
-$(top_builddir)/src/ordered_check_sums: $(top_srcdir)/src/ordered_check_sums.$(GOEXT)
-	-$(GOC) build -o $@ $<
+@GO__TRUE@$(top_builddir)/src/ordered_check_sums: $(top_srcdir)/src/ordered_check_sums.$(GOEXT)
+@GO__TRUE@	$(GOC) $(GOFLAGS) -o $@ $<
 
 all-local:
 	-$(MAKE) doxygen-doc

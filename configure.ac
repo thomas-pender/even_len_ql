@@ -25,16 +25,33 @@ DX_PS_FEATURE(OFF)
 : ${CFLAGS="-O3"}
 AC_PROG_CC
 
+#-------------------------------------------------
+# Golang compilation
+#-------------------------------------------------
+AC_ARG_ENABLE([_go],
+[AS_HELP_STRING([--disable-go],
+[disable compilation of golang scripts @<:@default: enabled@:>@])],
+[_go=${enableval}], [_go=yes])
+
+AM_CONDITIONAL([GO_], [test "x${_go}" = xyes])
+
+if test "x${_go}" = xyes; then
+: ${GOFLAGS="-O3"}
+AC_PROG_GO
+GOEXT=go
+AC_SUBST([GOEXT])
+fi
+#-------------------------------------------------
+
 AC_PROG_RANLIB
 AM_PROG_AR
-# AC_PROG_INSTALL
 
 #-------------------------------------------------
 # asynchronous execution
 #-------------------------------------------------
 AC_ARG_ENABLE([async-exec],
 [AS_HELP_STRING([--disable-async-exec],
-[disable asynchronous execution @<:@default: no@:>@])],
+[disable asynchronous execution @<:@default: enabled@:>@])],
 [async_exec=${enableval}], [async_exec=yes])
 
 if test "x${async_exec}" = xyes; then
@@ -62,16 +79,6 @@ Stopping...
 ========================================])])
 #-------------------------------------------------
 
-#-------------------------------------------------
-# extra variables
-#-------------------------------------------------
-GOC=go
-AC_SUBST([GOC])
-
-GOEXT=go
-AC_SUBST([GOEXT])
-#-------------------------------------------------
-
 AC_CONFIG_FILES([Makefile Doxyfile])
 
 AC_OUTPUT
@@ -83,13 +90,12 @@ cat << EOF
 ${PACKAGE_NAME} Version ${PACKAGE_VERSION}
 
 C compiler: '${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} ${LIBS}'
-Go compiler: '${GOC} build'
+Go compiler (enabled? ${_go}): '${GOC} ${GOFLAGS}'
 
 Package features:
-        - asynchronous execution: ${async_exec}
+        - asynchronous execution enabled? ${async_exec}
 
 Compile with 'make'.
-Generate detailed documentation with 'make doxygen-doc'.
 
 ============================================================
 
