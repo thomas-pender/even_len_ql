@@ -17,12 +17,12 @@ void FCNecklace(neck_t*, void*
 # if HAVE_PTHREAD
                 ,pthread_mutex_t*
 # endif
-     );
+                );
 
 void FCBracelet(neck_t*, void*
 # if HAVE_PTHREAD
                 ,pthread_mutex_t*
 # endif
-     );
+                );
 
 # endif

@@ -8,6 +8,11 @@ AC_CONFIG_HEADERS([src/config.h])
 
 AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror])
 
+AM_PROG_AR
+
+LT_PREREQ([2.4.6])
+LT_INIT([dlopen])
+
 #-------------------------------------------------
 # doxygen
 #-------------------------------------------------
@@ -20,6 +25,12 @@ DX_RTF_FEATURE(OFF)
 DX_XML_FEATURE(OFF)
 DX_PDF_FEATURE(OFF)
 DX_PS_FEATURE(OFF)
+
+if test "x${DX_FLAG_doc}" = "x1"; then
+_doxy=yes
+fi
+
+AM_CONDITIONAL([DOXY_], [test "x${_doxy}" = xyes])
 #-------------------------------------------------
 
 : ${CFLAGS="-O3"}
@@ -28,7 +39,7 @@ AC_PROG_CC
 #-------------------------------------------------
 # Golang compilation
 #-------------------------------------------------
-AC_ARG_ENABLE([_go],
+AC_ARG_ENABLE([go],
 [AS_HELP_STRING([--disable-go],
 [disable compilation of golang scripts @<:@default: enabled@:>@])],
 [_go=${enableval}], [_go=yes])
@@ -36,15 +47,13 @@ AC_ARG_ENABLE([_go],
 AM_CONDITIONAL([GO_], [test "x${_go}" = xyes])
 
 if test "x${_go}" = xyes; then
-: ${GOFLAGS="-O3"}
 AC_PROG_GO
+GOFLAGS="-O3"
 GOEXT=go
 AC_SUBST([GOEXT])
+AC_SUBST([GOFLAGS])
 fi
 #-------------------------------------------------
-
-AC_PROG_RANLIB
-AM_PROG_AR
 
 #-------------------------------------------------
 # asynchronous execution
@@ -59,7 +68,6 @@ if test "x${async_exec}" = xyes; then
   CC=$PTHREAD_CC
   LIBS="$PTHREAD_LIBS $LIBS"
   CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
-  AC_DEFINE([ASYNC_EXEC], [1], [asynchronous execution enabled])
 fi
 #-------------------------------------------------
 
@@ -79,6 +87,11 @@ Stopping...
 ========================================])])
 #-------------------------------------------------
 
+# Checks for typedefs, structures, and compiler characteristics.
+AC_C_INLINE
+AC_C_RESTRICT
+AC_TYPE_SIZE_T
+
 AC_CONFIG_FILES([Makefile Doxyfile])
 
 AC_OUTPUT
@@ -93,7 +106,39 @@ C compiler: '${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} ${LIBS}'
 Go compiler (enabled? ${_go}): '${GOC} ${GOFLAGS}'
 
 Package features:
-        - asynchronous execution enabled? ${async_exec}
+EOF
+
+if test "x${async_exec}" = xyes; then
+cat << EOF
+        - asynchronous execution enabled.
+EOF
+else
+cat << EOF
+        - asynchronous execution disabled.
+EOF
+fi
+
+if test "x${_go}" = xyes; then
+cat << EOF
+        - Go compilation enabled.
+EOF
+else
+cat << EOF
+        - Go compilation disabled.
+EOF
+fi
+
+if test "x${_doxy}" = xyes; then
+cat << EOF
+        - Doxygen documentation enabled.
+EOF
+else
+cat << EOF
+        - Doxygen documentation disabled.
+EOF
+fi
+
+cat << EOF
 
 Compile with 'make'.
 

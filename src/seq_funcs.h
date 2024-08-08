@@ -20,12 +20,12 @@ typedef double complex comp;
  * @brief User defined sequence parameters and functions.
  */
 typedef struct {
-     unsigned n; ///< string length
-     unsigned l; ///< length / 2
-     unsigned *nummap; ///< bijection between letters and logarithms of i
-     int *corrs; ///< sequence periodic auto-correlations
-     bool realcorrs; ///< whether the periodic auto-correlations are real-valued
-     double **psdtable; ///< distinct square norms of nonprincipal character sums
+  unsigned n; ///< string length
+  unsigned l; ///< length / 2
+  unsigned *nummap; ///< bijection between letters and logarithms of i
+  int *corrs; ///< sequence periodic auto-correlations
+  bool realcorrs; ///< whether the periodic auto-correlations are real-valued
+  double **psdtable; ///< distinct square norms of nonprincipal character sums
 } args_t;
 
 /* functions for neck struct */

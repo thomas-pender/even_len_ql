@@ -27,14 +27,14 @@ typedef void (*seq_print_t)(const unsigned*, const void*);
  * for each encountered necklaces/bracelets.
  */
 typedef struct {
-     unsigned n;           ///< string length
-     unsigned k;           ///< string arity
-     unsigned *num;        ///< string content
-     unsigned ncheckfuncs; ///< number of boolean checks (see check_t)
-     arg_init_t arginit;   ///< memory allocation
-     arg_free_t argfree;   ///< memory deallocation
-     check_t *checkfuncs;  ///< boolean checks
-     seq_print_t seqprint; ///< printing method
+  unsigned n;           ///< string length
+  unsigned k;           ///< string arity
+  unsigned *num;        ///< string content
+  unsigned ncheckfuncs; ///< number of boolean checks (see check_t)
+  arg_init_t arginit;   ///< memory allocation
+  arg_free_t argfree;   ///< memory deallocation
+  check_t *checkfuncs;  ///< boolean checks
+  seq_print_t seqprint; ///< printing method
 } neck_t;
 
 # endif

@@ -53,6 +53,7 @@
 #     ----- begin aminclude.am -------------------------------------
 
 
+VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
     false; \
@@ -132,7 +133,9 @@ host_triplet = @host@
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_prog_doxygen.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(top_srcdir)/configure \
@@ -144,26 +147,25 @@ CONFIG_HEADER = $(top_builddir)/src/config.h
 CONFIG_CLEAN_FILES = Doxyfile
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-LIBRARIES = $(noinst_LIBRARIES)
-ARFLAGS = cru
-AM_V_AR = $(am__v_AR_@AM_V@)
-am__v_AR_ = $(am__v_AR_@AM_DEFAULT_V@)
-am__v_AR_0 = @echo "  AR      " $@;
-am__v_AR_1 = 
-src_liblegendre_a_AR = $(AR) $(ARFLAGS)
-src_liblegendre_a_LIBADD =
+LTLIBRARIES = $(noinst_LTLIBRARIES)
+src_liblegendre_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am_src_liblegendre_a_OBJECTS = src/liblegendre_a-bracelets.$(OBJEXT) \
-	src/liblegendre_a-seq_funcs.$(OBJEXT)
-src_liblegendre_a_OBJECTS = $(am_src_liblegendre_a_OBJECTS)
-am_src_A_OBJECTS = src/A-A.$(OBJEXT)
+am_src_liblegendre_la_OBJECTS =  \
+	$(top_builddir)/src/src_liblegendre_la-bracelets.lo \
+	$(top_builddir)/src/src_liblegendre_la-seq_funcs.lo
+src_liblegendre_la_OBJECTS = $(am_src_liblegendre_la_OBJECTS)
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
+am__v_lt_1 = 
+am_src_A_OBJECTS = $(top_builddir)/src/src_A-A.$(OBJEXT)
 src_A_OBJECTS = $(am_src_A_OBJECTS)
-src_A_DEPENDENCIES = $(top_builddir)/src/liblegendre.a
+src_A_DEPENDENCIES = $(top_builddir)/src/liblegendre.la
 am_src_B_OBJECTS = src/B-B.$(OBJEXT)
 src_B_OBJECTS = $(am_src_B_OBJECTS)
-src_B_DEPENDENCIES = $(top_builddir)/src/liblegendre.a
+src_B_DEPENDENCIES = $(top_builddir)/src/liblegendre.la
 am__src_ordered_check_sums_SOURCES_DIST =  \
-	src/ordered_check_sums.$(GOEXT)
+	$(top_srcdir)/src/ordered_check_sums.$(GOEXT)
 am_src_ordered_check_sums_OBJECTS =
 src_ordered_check_sums_OBJECTS = $(am_src_ordered_check_sums_OBJECTS)
 src_ordered_check_sums_LDADD = $(LDADD)
@@ -182,29 +184,32 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/src
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = src/$(DEPDIR)/A-A.Po src/$(DEPDIR)/B-B.Po \
-	src/$(DEPDIR)/liblegendre_a-bracelets.Po \
-	src/$(DEPDIR)/liblegendre_a-seq_funcs.Po
+am__depfiles_remade = $(top_builddir)/src/$(DEPDIR)/src_A-A.Po \
+	$(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-bracelets.Plo \
+	$(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-seq_funcs.Plo \
+	src/$(DEPDIR)/B-B.Po
 am__mv = mv -f
-AM_V_lt = $(am__v_lt_@AM_V@)
-am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
-am__v_lt_0 = --silent
-am__v_lt_1 = 
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
 AM_V_CC = $(am__v_CC_@AM_V@)
 am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
 am__v_CC_0 = @echo "  CC      " $@;
 am__v_CC_1 = 
 CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(src_liblegendre_a_SOURCES) $(src_A_SOURCES) \
+SOURCES = $(src_liblegendre_la_SOURCES) $(src_A_SOURCES) \
 	$(src_B_SOURCES) $(src_ordered_check_sums_SOURCES)
-DIST_SOURCES = $(src_liblegendre_a_SOURCES) $(src_A_SOURCES) \
+DIST_SOURCES = $(src_liblegendre_la_SOURCES) $(src_A_SOURCES) \
 	$(src_B_SOURCES) $(am__src_ordered_check_sums_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
@@ -236,10 +241,12 @@ am__DIST_COMMON = $(srcdir)/Doxyfile.in $(srcdir)/Makefile.in \
 	$(top_srcdir)/build-aux/config.sub \
 	$(top_srcdir)/build-aux/depcomp \
 	$(top_srcdir)/build-aux/install-sh \
+	$(top_srcdir)/build-aux/ltmain.sh \
 	$(top_srcdir)/build-aux/missing $(top_srcdir)/src/config.h.in \
 	AUTHORS COPYING ChangeLog INSTALL NEWS README build-aux/ar-lib \
 	build-aux/compile build-aux/config.guess build-aux/config.sub \
-	build-aux/depcomp build-aux/install-sh build-aux/missing
+	build-aux/depcomp build-aux/install-sh build-aux/ltmain.sh \
+	build-aux/missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -259,7 +266,6 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-VPATH = $(srcdir):$(builddir)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
 AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
@@ -278,7 +284,10 @@ CTAGS = @CTAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DLLTOOL = @DLLTOOL@
 DOXYGEN_PAPER_SIZE = @DOXYGEN_PAPER_SIZE@
+DSYMUTIL = @DSYMUTIL@
+DUMPBIN = @DUMPBIN@
 DX_CONFIG = @DX_CONFIG@
 DX_DOCDIR = @DX_DOCDIR@
 DX_DOT = @DX_DOT@
@@ -308,6 +317,8 @@ ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 ETAGS = @ETAGS@
 EXEEXT = @EXEEXT@
+FGREP = @FGREP@
+FILECMD = @FILECMD@
 GOC = @GOC@
 GOEXT = @GOEXT@
 GOFLAGS = @GOFLAGS@
@@ -317,13 +328,24 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
+LIBTOOL = @LIBTOOL@
+LIPO = @LIPO@
+LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAKEINFO = @MAKEINFO@
+MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
+NM = @NM@
+NMEDIT = @NMEDIT@
+OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
+OTOOL = @OTOOL@
+OTOOL64 = @OTOOL64@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -348,6 +370,7 @@ abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
+ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
@@ -418,23 +441,25 @@ top_srcdir = @top_srcdir@
 @DX_COND_doc_TRUE@	$(DX_CLEAN_LATEX)
 
 ACLOCAL_AMFLAGS = -I m4
-noinst_LIBRARIES = src/liblegendre.a
-src_liblegendre_a_SOURCES = src/legendre.h src/bracelets.c \
-src/seq_funcs.c src/bracelets.h src/defs.h src/seq_funcs.h
+noinst_LTLIBRARIES = src/liblegendre.la
+src_liblegendre_la_SOURCES = $(top_srcdir)/src/legendre.h \
+$(top_srcdir)/src/bracelets.c $(top_srcdir)/src/seq_funcs.c \
+$(top_srcdir)/src/bracelets.h $(top_srcdir)/src/defs.h \
+$(top_srcdir)/src/seq_funcs.h
 
-src_liblegendre_a_CPPFLAGS = -I$(top_srcdir)/src
-@GO__FALSE@src_ordered_check_sums_SOURCES = src/ordered_check_sums.$(GOEXT)
-src_A_SOURCES = src/A.c
+src_liblegendre_la_CPPFLAGS = -I$(top_srcdir)/src
+@GO__TRUE@src_ordered_check_sums_SOURCES = $(top_srcdir)/src/ordered_check_sums.$(GOEXT)
+src_A_SOURCES = $(top_srcdir)/src/A.c
 src_A_CPPFLAGS = -I$(top_srcdir)/src
-src_A_LDADD = $(top_builddir)/src/liblegendre.a
+src_A_LDADD = $(top_builddir)/src/liblegendre.la
 src_B_SOURCES = src/B.c
 src_B_CPPFLAGS = -I$(top_srcdir)/src
-src_B_LDADD = $(top_builddir)/src/liblegendre.a
-EXTRA_DIST = $(srcdir)/docs_pages $(srcdir)/var $(srcdir)/README.md
+src_B_LDADD = $(top_builddir)/src/liblegendre.la
+EXTRA_DIST = $(top_srcdir)/docs_pages $(top_srcdir)/data $(top_srcdir)/README.md
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .c .o .obj
+.SUFFIXES: .c .lo .o .obj
 am--refresh: Makefile
 	@:
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/aminclude.am $(am__configure_deps)
@@ -488,30 +513,52 @@ Doxyfile: $(top_builddir)/config.status $(srcdir)/Doxyfile.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 clean-noinstPROGRAMS:
-	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
+	@list='$(noinst_PROGRAMS)'; test -n "$$list" || exit 0; \
+	echo " rm -f" $$list; \
+	rm -f $$list || exit $$?; \
+	test -n "$(EXEEXT)" || exit 0; \
+	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
+	echo " rm -f" $$list; \
+	rm -f $$list
 
-clean-noinstLIBRARIES:
-	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
+clean-noinstLTLIBRARIES:
+	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+	@list='$(noinst_LTLIBRARIES)'; \
+	locs=`for p in $$list; do echo $$p; done | \
+	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
+	      sort -u`; \
+	test -z "$$locs" || { \
+	  echo rm -f $${locs}; \
+	  rm -f $${locs}; \
+	}
+$(top_builddir)/src/$(am__dirstamp):
+	@$(MKDIR_P) $(top_builddir)/src
+	@: > $(top_builddir)/src/$(am__dirstamp)
+$(top_builddir)/src/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) $(top_builddir)/src/$(DEPDIR)
+	@: > $(top_builddir)/src/$(DEPDIR)/$(am__dirstamp)
+$(top_builddir)/src/src_liblegendre_la-bracelets.lo:  \
+	$(top_builddir)/src/$(am__dirstamp) \
+	$(top_builddir)/src/$(DEPDIR)/$(am__dirstamp)
+$(top_builddir)/src/src_liblegendre_la-seq_funcs.lo:  \
+	$(top_builddir)/src/$(am__dirstamp) \
+	$(top_builddir)/src/$(DEPDIR)/$(am__dirstamp)
 src/$(am__dirstamp):
 	@$(MKDIR_P) src
 	@: > src/$(am__dirstamp)
-src/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) src/$(DEPDIR)
-	@: > src/$(DEPDIR)/$(am__dirstamp)
-src/liblegendre_a-bracelets.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
-src/liblegendre_a-seq_funcs.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
 
-src/liblegendre.a: $(src_liblegendre_a_OBJECTS) $(src_liblegendre_a_DEPENDENCIES) $(EXTRA_src_liblegendre_a_DEPENDENCIES) src/$(am__dirstamp)
-	$(AM_V_at)-rm -f src/liblegendre.a
-	$(AM_V_AR)$(src_liblegendre_a_AR) src/liblegendre.a $(src_liblegendre_a_OBJECTS) $(src_liblegendre_a_LIBADD)
-	$(AM_V_at)$(RANLIB) src/liblegendre.a
-src/A-A.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
+src/liblegendre.la: $(src_liblegendre_la_OBJECTS) $(src_liblegendre_la_DEPENDENCIES) $(EXTRA_src_liblegendre_la_DEPENDENCIES) src/$(am__dirstamp)
+	$(AM_V_CCLD)$(LINK)  $(src_liblegendre_la_OBJECTS) $(src_liblegendre_la_LIBADD) $(LIBS)
+$(top_builddir)/src/src_A-A.$(OBJEXT):  \
+	$(top_builddir)/src/$(am__dirstamp) \
+	$(top_builddir)/src/$(DEPDIR)/$(am__dirstamp)
 
 src/A$(EXEEXT): $(src_A_OBJECTS) $(src_A_DEPENDENCIES) $(EXTRA_src_A_DEPENDENCIES) src/$(am__dirstamp)
 	@rm -f src/A$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(src_A_OBJECTS) $(src_A_LDADD) $(LIBS)
+src/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) src/$(DEPDIR)
+	@: > src/$(DEPDIR)/$(am__dirstamp)
 src/B-B.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 
 src/B$(EXEEXT): $(src_B_OBJECTS) $(src_B_DEPENDENCIES) $(EXTRA_src_B_DEPENDENCIES) src/$(am__dirstamp)
@@ -524,15 +571,17 @@ src/ordered_check_sums$(EXEEXT): $(src_ordered_check_sums_OBJECTS) $(src_ordered
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f $(top_builddir)/src/*.$(OBJEXT)
+	-rm -f $(top_builddir)/src/*.lo
 	-rm -f src/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/A-A.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@$(top_builddir)/src/$(DEPDIR)/src_A-A.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@$(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-bracelets.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@$(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-seq_funcs.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/B-B.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/liblegendre_a-bracelets.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/liblegendre_a-seq_funcs.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -556,47 +605,41 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-src/liblegendre_a-bracelets.o: src/bracelets.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT src/liblegendre_a-bracelets.o -MD -MP -MF src/$(DEPDIR)/liblegendre_a-bracelets.Tpo -c -o src/liblegendre_a-bracelets.o `test -f 'src/bracelets.c' || echo '$(srcdir)/'`src/bracelets.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/liblegendre_a-bracelets.Tpo src/$(DEPDIR)/liblegendre_a-bracelets.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='src/bracelets.c' object='src/liblegendre_a-bracelets.o' libtool=no @AMDEPBACKSLASH@
+.c.lo:
+@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o src/liblegendre_a-bracelets.o `test -f 'src/bracelets.c' || echo '$(srcdir)/'`src/bracelets.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
 
-src/liblegendre_a-bracelets.obj: src/bracelets.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT src/liblegendre_a-bracelets.obj -MD -MP -MF src/$(DEPDIR)/liblegendre_a-bracelets.Tpo -c -o src/liblegendre_a-bracelets.obj `if test -f 'src/bracelets.c'; then $(CYGPATH_W) 'src/bracelets.c'; else $(CYGPATH_W) '$(srcdir)/src/bracelets.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/liblegendre_a-bracelets.Tpo src/$(DEPDIR)/liblegendre_a-bracelets.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='src/bracelets.c' object='src/liblegendre_a-bracelets.obj' libtool=no @AMDEPBACKSLASH@
+$(top_builddir)/src/src_liblegendre_la-bracelets.lo: $(top_builddir)/src/bracelets.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT $(top_builddir)/src/src_liblegendre_la-bracelets.lo -MD -MP -MF $(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-bracelets.Tpo -c -o $(top_builddir)/src/src_liblegendre_la-bracelets.lo `test -f '$(top_builddir)/src/bracelets.c' || echo '$(srcdir)/'`$(top_builddir)/src/bracelets.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-bracelets.Tpo $(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-bracelets.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_builddir)/src/bracelets.c' object='$(top_builddir)/src/src_liblegendre_la-bracelets.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o src/liblegendre_a-bracelets.obj `if test -f 'src/bracelets.c'; then $(CYGPATH_W) 'src/bracelets.c'; else $(CYGPATH_W) '$(srcdir)/src/bracelets.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o $(top_builddir)/src/src_liblegendre_la-bracelets.lo `test -f '$(top_builddir)/src/bracelets.c' || echo '$(srcdir)/'`$(top_builddir)/src/bracelets.c
 
-src/liblegendre_a-seq_funcs.o: src/seq_funcs.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT src/liblegendre_a-seq_funcs.o -MD -MP -MF src/$(DEPDIR)/liblegendre_a-seq_funcs.Tpo -c -o src/liblegendre_a-seq_funcs.o `test -f 'src/seq_funcs.c' || echo '$(srcdir)/'`src/seq_funcs.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/liblegendre_a-seq_funcs.Tpo src/$(DEPDIR)/liblegendre_a-seq_funcs.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='src/seq_funcs.c' object='src/liblegendre_a-seq_funcs.o' libtool=no @AMDEPBACKSLASH@
+$(top_builddir)/src/src_liblegendre_la-seq_funcs.lo: $(top_builddir)/src/seq_funcs.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT $(top_builddir)/src/src_liblegendre_la-seq_funcs.lo -MD -MP -MF $(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-seq_funcs.Tpo -c -o $(top_builddir)/src/src_liblegendre_la-seq_funcs.lo `test -f '$(top_builddir)/src/seq_funcs.c' || echo '$(srcdir)/'`$(top_builddir)/src/seq_funcs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-seq_funcs.Tpo $(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-seq_funcs.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_builddir)/src/seq_funcs.c' object='$(top_builddir)/src/src_liblegendre_la-seq_funcs.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o src/liblegendre_a-seq_funcs.o `test -f 'src/seq_funcs.c' || echo '$(srcdir)/'`src/seq_funcs.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o $(top_builddir)/src/src_liblegendre_la-seq_funcs.lo `test -f '$(top_builddir)/src/seq_funcs.c' || echo '$(srcdir)/'`$(top_builddir)/src/seq_funcs.c
 
-src/liblegendre_a-seq_funcs.obj: src/seq_funcs.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT src/liblegendre_a-seq_funcs.obj -MD -MP -MF src/$(DEPDIR)/liblegendre_a-seq_funcs.Tpo -c -o src/liblegendre_a-seq_funcs.obj `if test -f 'src/seq_funcs.c'; then $(CYGPATH_W) 'src/seq_funcs.c'; else $(CYGPATH_W) '$(srcdir)/src/seq_funcs.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/liblegendre_a-seq_funcs.Tpo src/$(DEPDIR)/liblegendre_a-seq_funcs.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='src/seq_funcs.c' object='src/liblegendre_a-seq_funcs.obj' libtool=no @AMDEPBACKSLASH@
+$(top_builddir)/src/src_A-A.o: $(top_builddir)/src/A.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_A_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT $(top_builddir)/src/src_A-A.o -MD -MP -MF $(top_builddir)/src/$(DEPDIR)/src_A-A.Tpo -c -o $(top_builddir)/src/src_A-A.o `test -f '$(top_builddir)/src/A.c' || echo '$(srcdir)/'`$(top_builddir)/src/A.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(top_builddir)/src/$(DEPDIR)/src_A-A.Tpo $(top_builddir)/src/$(DEPDIR)/src_A-A.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_builddir)/src/A.c' object='$(top_builddir)/src/src_A-A.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_liblegendre_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o src/liblegendre_a-seq_funcs.obj `if test -f 'src/seq_funcs.c'; then $(CYGPATH_W) 'src/seq_funcs.c'; else $(CYGPATH_W) '$(srcdir)/src/seq_funcs.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_A_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o $(top_builddir)/src/src_A-A.o `test -f '$(top_builddir)/src/A.c' || echo '$(srcdir)/'`$(top_builddir)/src/A.c
 
-src/A-A.o: src/A.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_A_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT src/A-A.o -MD -MP -MF src/$(DEPDIR)/A-A.Tpo -c -o src/A-A.o `test -f 'src/A.c' || echo '$(srcdir)/'`src/A.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/A-A.Tpo src/$(DEPDIR)/A-A.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='src/A.c' object='src/A-A.o' libtool=no @AMDEPBACKSLASH@
+$(top_builddir)/src/src_A-A.obj: $(top_builddir)/src/A.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_A_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT $(top_builddir)/src/src_A-A.obj -MD -MP -MF $(top_builddir)/src/$(DEPDIR)/src_A-A.Tpo -c -o $(top_builddir)/src/src_A-A.obj `if test -f '$(top_builddir)/src/A.c'; then $(CYGPATH_W) '$(top_builddir)/src/A.c'; else $(CYGPATH_W) '$(srcdir)/$(top_builddir)/src/A.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(top_builddir)/src/$(DEPDIR)/src_A-A.Tpo $(top_builddir)/src/$(DEPDIR)/src_A-A.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$(top_builddir)/src/A.c' object='$(top_builddir)/src/src_A-A.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_A_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o src/A-A.o `test -f 'src/A.c' || echo '$(srcdir)/'`src/A.c
-
-src/A-A.obj: src/A.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_A_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT src/A-A.obj -MD -MP -MF src/$(DEPDIR)/A-A.Tpo -c -o src/A-A.obj `if test -f 'src/A.c'; then $(CYGPATH_W) 'src/A.c'; else $(CYGPATH_W) '$(srcdir)/src/A.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/A-A.Tpo src/$(DEPDIR)/A-A.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='src/A.c' object='src/A-A.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_A_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o src/A-A.obj `if test -f 'src/A.c'; then $(CYGPATH_W) 'src/A.c'; else $(CYGPATH_W) '$(srcdir)/src/A.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_A_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o $(top_builddir)/src/src_A-A.obj `if test -f '$(top_builddir)/src/A.c'; then $(CYGPATH_W) '$(top_builddir)/src/A.c'; else $(CYGPATH_W) '$(srcdir)/$(top_builddir)/src/A.c'; fi`
 
 src/B-B.o: src/B.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_B_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT src/B-B.o -MD -MP -MF src/$(DEPDIR)/B-B.Tpo -c -o src/B-B.o `test -f 'src/B.c' || echo '$(srcdir)/'`src/B.c
@@ -611,6 +654,17 @@ src/B-B.obj: src/B.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='src/B.c' object='src/B-B.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_B_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o src/B-B.obj `if test -f 'src/B.c'; then $(CYGPATH_W) 'src/B.c'; else $(CYGPATH_W) '$(srcdir)/src/B.c'; fi`
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf $(top_builddir)/src/.libs $(top_builddir)/src/_libs
+	-rm -rf .libs _libs
+	-rm -rf src/.libs src/_libs
+
+distclean-libtool:
+	-rm -f libtool config.lt
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -844,7 +898,8 @@ distcleancheck: distclean
 	       exit 1; } >&2
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS) $(LIBRARIES) all-local
+@DOXY__FALSE@all-local:
+all-am: Makefile $(PROGRAMS) $(LTLIBRARIES) all-local
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -874,24 +929,26 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f src/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/$(am__dirstamp)
+	-test -z "$(top_builddir)/src/$(DEPDIR)/$(am__dirstamp)" || rm -f $(top_builddir)/src/$(DEPDIR)/$(am__dirstamp)
+	-test -z "$(top_builddir)/src/$(am__dirstamp)" || rm -f $(top_builddir)/src/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-local clean-noinstLIBRARIES \
-	clean-noinstPROGRAMS mostlyclean-am
+clean-am: clean-generic clean-libtool clean-local \
+	clean-noinstLTLIBRARIES clean-noinstPROGRAMS mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-		-rm -f src/$(DEPDIR)/A-A.Po
+		-rm -f $(top_builddir)/src/$(DEPDIR)/src_A-A.Po
+	-rm -f $(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-bracelets.Plo
+	-rm -f $(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-seq_funcs.Plo
 	-rm -f src/$(DEPDIR)/B-B.Po
-	-rm -f src/$(DEPDIR)/liblegendre_a-bracelets.Po
-	-rm -f src/$(DEPDIR)/liblegendre_a-seq_funcs.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-hdr distclean-tags
+	distclean-hdr distclean-libtool distclean-tags
 
 dvi: dvi-am
 
@@ -936,16 +993,17 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-		-rm -f src/$(DEPDIR)/A-A.Po
+		-rm -f $(top_builddir)/src/$(DEPDIR)/src_A-A.Po
+	-rm -f $(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-bracelets.Plo
+	-rm -f $(top_builddir)/src/$(DEPDIR)/src_liblegendre_la-seq_funcs.Plo
 	-rm -f src/$(DEPDIR)/B-B.Po
-	-rm -f src/$(DEPDIR)/liblegendre_a-bracelets.Po
-	-rm -f src/$(DEPDIR)/liblegendre_a-seq_funcs.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
 mostlyclean: mostlyclean-am
 
-mostlyclean-am: mostlyclean-compile mostlyclean-generic
+mostlyclean-am: mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool
 
 pdf: pdf-am
 
@@ -960,21 +1018,22 @@ uninstall-am:
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am all-local am--depfiles am--refresh \
-	check check-am clean clean-cscope clean-generic clean-local \
-	clean-noinstLIBRARIES clean-noinstPROGRAMS cscope \
-	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
+	check check-am clean clean-cscope clean-generic clean-libtool \
+	clean-local clean-noinstLTLIBRARIES clean-noinstPROGRAMS \
+	cscope cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
 	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
 	dist-zstd distcheck distclean distclean-compile \
-	distclean-generic distclean-hdr distclean-tags distcleancheck \
-	distdir distuninstallcheck dvi dvi-am html html-am info \
-	info-am install install-am install-data install-data-am \
-	install-dvi install-dvi-am install-exec install-exec-am \
-	install-html install-html-am install-info install-info-am \
-	install-man install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic pdf pdf-am \
-	ps ps-am tags tags-am uninstall uninstall-am
+	distclean-generic distclean-hdr distclean-libtool \
+	distclean-tags distcleancheck distdir distuninstallcheck dvi \
+	dvi-am html html-am info info-am install install-am \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am
 
 .PRECIOUS: Makefile
 
@@ -1043,11 +1102,11 @@ uninstall-am:
 @GO__TRUE@$(top_builddir)/src/ordered_check_sums: $(top_srcdir)/src/ordered_check_sums.$(GOEXT)
 @GO__TRUE@	$(GOC) $(GOFLAGS) -o $@ $<
 
-all-local:
-	-$(MAKE) doxygen-doc
+@DOXY__TRUE@all-local:
+@DOXY__TRUE@	$(MAKE) doxygen-doc
 
 clean-local:
-	-rm -rf $(builddir)/docs
+	-rm -rf $(top_builddir)/docs $(top_builddir)/src
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

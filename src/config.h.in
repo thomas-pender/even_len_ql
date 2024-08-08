@@ -1,10 +1,10 @@
 /* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* asynchronous execution enabled */
-#undef ASYNC_EXEC
-
 /* Define to 1 if you have the <complex.h> header file. */
 #undef HAVE_COMPLEX_H
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
@@ -39,6 +39,9 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
+/* Define to the sub-directory where libtool stores uninstalled libraries. */
+#undef LT_OBJDIR
+
 /* Name of package */
 #undef PACKAGE
 
@@ -71,3 +74,27 @@
 
 /* Version number of package */
 #undef VERSION
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+#undef inline
+#endif
+
+/* Define to the equivalent of the C99 'restrict' keyword, or to
+   nothing if this is not supported.  Do not define if restrict is
+   supported only directly.  */
+#undef restrict
+/* Work around a bug in older versions of Sun C++, which did not
+   #define __restrict__ or support _Restrict or __restrict__
+   even though the corresponding Sun C compiler ended up with
+   "#define restrict _Restrict" or "#define restrict __restrict__"
+   in the previous line.  This workaround can be removed once
+   we assume Oracle Developer Studio 12.5 (2016) or later.  */
+#if defined __SUNPRO_CC && !defined __RESTRICT && !defined __restrict__
+# define _Restrict
+# define __restrict__
+#endif
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+#undef size_t

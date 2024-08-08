@@ -1,7 +1,7 @@
 /**
  * @file seq_funcs.c
  * @brief Auxilary sequence methods.
-  * @author Thomas Pender
+ * @author Thomas Pender
  */
 # include <config.h>
 
@@ -33,7 +33,7 @@
 static inline
 unsigned quatmult(const unsigned a, const unsigned b)
 {
-     return (a + K - b) & MOD;
+  return (a + K - b) & MOD;
 }
 
 /**
@@ -49,17 +49,17 @@ unsigned quatmult(const unsigned a, const unsigned b)
 static
 int corr(const unsigned *a, size_t j, args_t *args)
 {
-     int *vec=(int*)calloc(K,sizeof(int)), diff;
-     for (size_t i=0,J; i<args->n; i++) {
-          J=i+j;
-          J=(J<args->n) ? J : (J-args->n);
-          vec[quatmult(args->nummap[a[i+1]],
-                       args->nummap[a[J+1]])]++;
-     }
-     if (vec[1]!=vec[3]) diff=(int)args->n+1;
-     else diff=vec[0]-vec[2];
-     free(vec);
-     return diff;
+  int *vec=(int*)calloc(K,sizeof(int)), diff;
+  for (size_t i=0,J; i<args->n; i++) {
+    J=i+j;
+    J=(J<args->n) ? J : (J-args->n);
+    vec[quatmult(args->nummap[a[i+1]],
+                 args->nummap[a[J+1]])]++;
+  }
+  if (vec[1]!=vec[3]) diff=(int)args->n+1;
+  else diff=vec[0]-vec[2];
+  free(vec);
+  return diff;
 }
 
 /**
@@ -70,12 +70,12 @@ int corr(const unsigned *a, size_t j, args_t *args)
  */
 void printseq(const unsigned *a, const void *_args)
 {
-     size_t i;
-     args_t *args=(args_t*)_args;
-     for (i=1; i<=args->n; i++) printf("%u",args->nummap[a[i]]);
-     printf(" ");
-     for (i=1; i<args->l; i++) printf("%d,",args->corrs[i]);
-     printf("%d\n",args->corrs[args->l]);
+  size_t i;
+  args_t *args=(args_t*)_args;
+  for (i=1; i<=args->n; i++) printf("%u",args->nummap[a[i]]);
+  printf(" ");
+  for (i=1; i<args->l; i++) printf("%d,",args->corrs[i]);
+  printf("%d\n",args->corrs[args->l]);
 }
 
 /**
@@ -90,15 +90,15 @@ void printseq(const unsigned *a, const void *_args)
  */
 void arginit(const unsigned *a, void *_args)
 {
-     size_t i;
-     args_t *args=(args_t*)_args;
+  size_t i;
+  args_t *args=(args_t*)_args;
 
-     args->realcorrs=true;
-     for (i=1; i<=args->l; i++)
-          if ( (args->corrs[i]=corr(a,i,args))>(int)args->n ) {
-               args->realcorrs=false;
-               break;
-          }
+  args->realcorrs=true;
+  for (i=1; i<=args->l; i++)
+    if ( (args->corrs[i]=corr(a,i,args))>(int)args->n ) {
+      args->realcorrs=false;
+      break;
+    }
 }
 
 /**
@@ -112,8 +112,8 @@ void arginit(const unsigned *a, void *_args)
  */
 void argfree(void *_args)
 {
-     args_t *args=(args_t*)_args;
-     if (args->corrs!=NULL) free(args->corrs);
+  args_t *args=(args_t*)_args;
+  if (args->corrs!=NULL) free(args->corrs);
 }
 
 /**
@@ -123,8 +123,8 @@ void argfree(void *_args)
  */
 bool realcorrs(const void *_args)
 {
-     args_t *args=(args_t*)_args;
-     return args->realcorrs;
+  args_t *args=(args_t*)_args;
+  return args->realcorrs;
 }
 
 /**
@@ -139,17 +139,17 @@ bool realcorrs(const void *_args)
  */
 bool psdtest(const void *_args)
 {
-     args_t *args=(args_t*)_args;
-     double sum;
-     size_t i,j;
-     int N=2*(int)args->n+2;
-     for (i=1; i<=args->l; i++) { /* i-th psd */
-          sum=args->n;
-          for (j=1; j<args->l; j++) sum+=args->corrs[j]*args->psdtable[i][j];
-          sum+=args->corrs[args->l]*args->psdtable[i][args->l];
-          if (sum-N>ERR) return false;
-     }
-     return true;
+  args_t *args=(args_t*)_args;
+  double sum;
+  size_t i,j;
+  int N=2*(int)args->n+2;
+  for (i=1; i<=args->l; i++) { /* i-th psd */
+    sum=args->n;
+    for (j=1; j<args->l; j++) sum+=args->corrs[j]*args->psdtable[i][j];
+    sum+=args->corrs[args->l]*args->psdtable[i][args->l];
+    if (sum-N>ERR) return false;
+  }
+  return true;
 }
 
 /**
@@ -159,19 +159,19 @@ bool psdtest(const void *_args)
  */
 double **Psdtable(unsigned n)
 {
-     size_t i,j;
-     unsigned l=n>>1U;
-     double **table=(double**)malloc((l+1)*sizeof(double*));
-     table[0]=NULL;
-     for (i=1; i<=l; i++) {
-          table[i]=(double*)calloc(l+1,sizeof(double));
-          table[i][0]=1;
-          for (j=1; j<l; j++) {
-               table[i][j]=2*creal(cexp(2*PI*I*i*j/n));
-          }
-          table[i][l]=creal(cexp(2*PI*I*i*l/n));
-     }
-     return table;
+  size_t i,j;
+  unsigned l=n>>1U;
+  double **table=(double**)malloc((l+1)*sizeof(double*));
+  table[0]=NULL;
+  for (i=1; i<=l; i++) {
+    table[i]=(double*)calloc(l+1,sizeof(double));
+    table[i][0]=1;
+    for (j=1; j<l; j++) {
+      table[i][j]=2*creal(cexp(2*PI*I*i*j/n));
+    }
+    table[i][l]=creal(cexp(2*PI*I*i*l/n));
+  }
+  return table;
 }
 
 /**
@@ -181,13 +181,13 @@ double **Psdtable(unsigned n)
  */
 void Argfree(args_t *args)
 {
-     if (args->nummap!=NULL) free(args->nummap);
-     if (args->corrs!=NULL) free(args->corrs);
-     if (args->psdtable!=NULL) {
-          for (size_t i=0; i<=args->l; i++)
-               if (args->psdtable[i]!=NULL) free(args->psdtable[i]);
-          free(args->psdtable);
-     }
+  if (args->nummap!=NULL) free(args->nummap);
+  if (args->corrs!=NULL) free(args->corrs);
+  if (args->psdtable!=NULL) {
+    for (size_t i=0; i<=args->l; i++)
+      if (args->psdtable[i]!=NULL) free(args->psdtable[i]);
+    free(args->psdtable);
+  }
 }
 
 /**
@@ -197,6 +197,6 @@ void Argfree(args_t *args)
  */
 void Neckfree(neck_t *N)
 {
-     if (N->num!=NULL) free(N->num);
-     if (N->checkfuncs!=NULL) free(N->checkfuncs);
+  if (N->num!=NULL) free(N->num);
+  if (N->checkfuncs!=NULL) free(N->checkfuncs);
 }
